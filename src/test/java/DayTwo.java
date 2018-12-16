@@ -23,7 +23,23 @@ class DayTwo {
         return (int) Arrays.stream(input).filter(s->containsGivenNumberOfOccurences(s, noOfOccurences)).count();
     }
 
-    public int count(String[] input) {
+    int count(String[] input) {
         return count(input, 2) * count(input, 3);
+    }
+
+    String oneCharacterDifferent(String string1, String string2) {
+        String result = "";
+        boolean foundOneDifference = false;
+        for (int i = 0; i < string1.length(); i++) {
+            if(string1.charAt(i) != string2.charAt(i)){
+                if (foundOneDifference){
+                    return "";
+                } else {
+                    foundOneDifference = true;
+                    result = string1.substring(0,i) + string1.substring(i+1);
+                }
+            }
+        }
+        return result;
     }
 }

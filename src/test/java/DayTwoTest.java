@@ -55,6 +55,27 @@ public class DayTwoTest {
 
     @Test
     public void firstSolution(){
-        assertThat(dayTwo.count(Input2.STRINGS)).isEqualTo(0);
+        assertThat(dayTwo.count(Input2.STRINGS)).isEqualTo(8118);
+    }
+
+    @Test
+    public void compareTwoStringForOneLetterDifferent() {
+        assertThat(dayTwo.oneCharacterDifferent("bbc","abc")).isEqualTo("bc");
+        assertThat(dayTwo.oneCharacterDifferent("bbc","bbc")).isEqualTo("");
+    }
+
+    @Test
+    public void secondSolution() {
+        for (int i = 0; i < Input2.STRINGS.length/2; i++) {
+            for(int j = 0; j < Input2.STRINGS.length; j++ )    {
+                if(i!=j){
+                    String commmonChars = dayTwo.oneCharacterDifferent(Input2.STRINGS[i], Input2.STRINGS[j]);
+                    if(!"".equals(commmonChars)){
+                        System.out.println(commmonChars);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
