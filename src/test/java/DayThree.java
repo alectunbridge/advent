@@ -8,6 +8,7 @@ class DayThree {
 
     private static final Pattern PATTERN = Pattern.compile("^#(\\d*) @ (\\d*),(\\d*): (\\d*)x(\\d*)$");
     private int[][] fabric;
+    private List<Claim> claims;
 
     Claim parseClaim(String input) {
         Claim claim = new Claim();
@@ -26,7 +27,7 @@ class DayThree {
     int[][] parseClaims(String[] input) {
         int maxWidth = 0;
         int maxHeight = 0;
-        List<Claim> claims = new ArrayList<>();
+        claims = new ArrayList<>();
         for (String line : input) {
             Claim claim = parseClaim(line);
             claims.add(claim);
@@ -63,5 +64,39 @@ class DayThree {
             overlappingCells += Arrays.stream(cols).filter(i->i>1).count();
         }
         return overlappingCells;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (int[] column : fabric) {
+            for (int distanceFromTop = 0; distanceFromTop < fabric[0].length; distanceFromTop++) {
+                result.append(column[distanceFromTop]);
+            }
+            result.append("\n");
+        }
+        return result.toString();
+    }
+
+
+    boolean checkClaimForNoOverlap(Claim claim) {
+        for(int x = 0; x < claim.getWidth(); x++){
+            for (int y = 0; y < claim.getHeight(); y++) {
+                if(fabric[x+claim.getDistanceFromLeft()][y+claim.getDistanceFromTop()] != 1){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    Claim findClaimWithNoOverLap() {
+        for (Claim claim : claims) {
+            if(checkClaimForNoOverlap(claim)){
+                return claim;
+            }
+        }
+
+        return null;
     }
 }

@@ -64,4 +64,32 @@ public class DayThreeTest {
 
         assertThat(dayThree.calculateOverlap()).isEqualTo(105071);
     }
+
+    @Test
+    public void toStringForFabric() {
+        dayThree.parseClaims(new String[]{"#1 @ 0,0: 2x1", "#2 @ 0,0: 1x2", "#3 @ 1,1: 1x1"});
+
+        assertThat(dayThree.toString()).isEqualTo(
+                "21" + "\n" +
+                "11" + "\n" );
+    }
+
+    @Test
+    public void toStringForClaim() {
+        assertThat(dayThree.parseClaim("#3 @ 1,1: 1x1").toString()).isEqualTo("#3 @ 1,1: 1x1");
+    }
+
+    @Test
+    public void checkClaimForNoOverlap() {
+        dayThree.parseClaims(new String[]{"#1 @ 0,0: 2x1", "#2 @ 0,0: 1x2", "#3 @ 1,1: 1x1"});
+
+        assertThat(dayThree.checkClaimForNoOverlap(dayThree.parseClaim("#3 @ 1,1: 1x1"))).isTrue();
+    }
+
+    @Test
+    public void secondResult() {
+        dayThree.parseClaims(Input3.STRINGS);
+        Claim claim = dayThree.findClaimWithNoOverLap();
+        assertThat(claim).isEqualTo(dayThree.parseClaim("#222 @ 359,844: 13x13"));
+    }
 }
