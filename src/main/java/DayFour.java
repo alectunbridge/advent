@@ -69,6 +69,8 @@ class DayFour {
                 laziestGuard = guard;
             }
         };
+        System.out.println(laziestGuard.getId());
         return laziestGuard.getId()*laziestGuard.getMostFrequentlyAsleepMinute();
     }
+
 }

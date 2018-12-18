@@ -3,6 +3,7 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -86,9 +87,36 @@ public class DayFourTest {
     }
 
     @Test
+    public void guardSpansMultipleDays() {
+        dayFour.parseRecords(
+                "[1518-10-31 23:55] Guard #10 begins shift",
+                "[1518-11-01 00:01] falls asleep",
+                "[1518-11-02 00:25] wakes up");
+
+        assertThat(dayFour.getGuards().get(10).getTotalMinutesAsleep()).isEqualTo(59 + 25);
+    }
+
+    @Test
     public void firstSolution() {
         List<Record> records = dayFour.parseRecords(Input4.STRINGS);
-        records.forEach(s->System.out.println(s));
+        records.forEach(System.out::println);
         assertThat(dayFour.getSolution()).isEqualTo(0);
+    }
+
+
+    @Test
+    public void printGuard() {
+//        dayFour.parseRecords(
+//                "[1518-10-31 23:55] Guard #10 begins shift",
+//                "[1518-11-01 00:01] falls asleep",
+//                "[1518-11-02 00:25] wakes up");
+
+        dayFour.parseRecords(Input4.STRINGS);
+        Map<Integer, Guard> guards = dayFour.getGuards();
+        guards.forEach((id, guard) -> {
+            System.out.println(id);
+            System.out.println(guard);
+        });
+
     }
 }
