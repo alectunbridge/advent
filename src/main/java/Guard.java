@@ -101,4 +101,20 @@ class Guard {
         });
         return result.toString();
     }
+
+    public int getTotalTimeAsleepForAGivenMinute(int minute) {
+        int[] aggregatedMinutes = new int[60];
+        for(int[] minArr: minutes.values()){
+            for(int i=0; i<60; i++){
+                aggregatedMinutes[i] += minArr[i];
+            }
+        }
+        int max = 0;
+        for(int j=0; j<60; j++){
+            if(aggregatedMinutes[j]>max){
+                max=aggregatedMinutes[j];
+            }
+        }
+        return max;
+    }
 }

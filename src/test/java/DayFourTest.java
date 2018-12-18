@@ -83,7 +83,7 @@ public class DayFourTest {
         assertThat(dayFour.getGuards().get(99).getTotalMinutesAsleep()).isEqualTo(30);
         assertThat(dayFour.getGuards().get(99).getTotalMinutesAsleep()).isEqualTo(30);
 
-        assertThat(dayFour.getSolution()).isEqualTo(240);
+        assertThat(dayFour.getSolution1()).isEqualTo(240);
     }
 
     @Test
@@ -100,7 +100,14 @@ public class DayFourTest {
     public void firstSolution() {
         List<Record> records = dayFour.parseRecords(Input4.STRINGS);
         records.forEach(System.out::println);
-        assertThat(dayFour.getSolution()).isEqualTo(19025);
+        assertThat(dayFour.getSolution1()).isEqualTo(19025);
+    }
+
+    @Test
+    public void secondSolution() {
+        List<Record> records = dayFour.parseRecords(Input4.STRINGS);
+        records.forEach(System.out::println);
+        assertThat(dayFour.getSolution2()).isEqualTo(0);
     }
 
 

@@ -75,7 +75,7 @@ class DayFour {
         return guards;
     }
 
-    public int getSolution() {
+    public int getSolution1() {
         Guard laziestGuard = null;
         int maxTotalMinutes = 0;
         for (Guard guard : guards.values()) {
@@ -85,9 +85,22 @@ class DayFour {
                 laziestGuard = guard;
             }
         }
-        ;
         System.out.println(laziestGuard.getId());
         return laziestGuard.getId() * laziestGuard.getMostFrequentlyAsleepMinute();
     }
 
+    public int getSolution2() {
+        Guard laziestGuard = null;
+        int maxTotalMinutes = 0;
+        for (Guard guard : guards.values()) {
+            int mostFrequentlyAsleepMinute = guard.getMostFrequentlyAsleepMinute();
+            int totalTimeAsleepForAGivenMinute = guard.getTotalTimeAsleepForAGivenMinute(mostFrequentlyAsleepMinute);
+            if(totalTimeAsleepForAGivenMinute > maxTotalMinutes){
+
+                maxTotalMinutes = totalTimeAsleepForAGivenMinute;
+                laziestGuard = guard;
+            }
+        }
+        return laziestGuard.getId() * laziestGuard.getMostFrequentlyAsleepMinute();
+    }
 }
