@@ -44,10 +44,10 @@ public class DayFourTest {
 
     @Test
     public void sortRecords() {
-        List<Record> records = dayFour.parseRecords("[1518-10-12 00:35] Guard #2309 begins shift", "[1518-10-09 00:43] wakes up");
+        List<Record> records = dayFour.parseRecords("[1518-10-12 00:35] wakes up", "[1518-10-09 00:43] Guard #2309 begins shift");
         assertThat(records).containsExactly(
-                dayFour.parseRecord("[1518-10-09 00:43] wakes up"),
-                dayFour.parseRecord("[1518-10-12 00:35] Guard #2309 begins shift"));
+                dayFour.parseRecord("[1518-10-09 00:43] Guard #2309 begins shift"),
+                dayFour.parseRecord("[1518-10-12 00:35] wakes up"));
     }
 
     @Test
@@ -100,17 +100,13 @@ public class DayFourTest {
     public void firstSolution() {
         List<Record> records = dayFour.parseRecords(Input4.STRINGS);
         records.forEach(System.out::println);
-        assertThat(dayFour.getSolution()).isEqualTo(0);
+        assertThat(dayFour.getSolution()).isEqualTo(19025);
     }
 
 
+    //Just for debugging
     @Test
-    public void printGuard() {
-//        dayFour.parseRecords(
-//                "[1518-10-31 23:55] Guard #10 begins shift",
-//                "[1518-11-01 00:01] falls asleep",
-//                "[1518-11-02 00:25] wakes up");
-
+    public void printGuards() {
         dayFour.parseRecords(Input4.STRINGS);
         Map<Integer, Guard> guards = dayFour.getGuards();
         guards.forEach((id, guard) -> {
