@@ -77,4 +77,37 @@ public class DaySixTest {
 
         assertThat(daySix.getFirstSolution()).isEqualTo(4475);
     }
+
+    @Test
+    public void sumDistancesLessThan32ForASinglePoint() {
+        DaySix daySix = new DaySix(new Coordinate[]{new Coordinate(32,0)});
+        daySix.calculateManhattanDistances();
+
+        assertThat(daySix.getSecondSolution(32)).isEqualTo(32);
+    }
+
+
+    @Test
+    public void exampleSecondSolution() {
+        Coordinate[] coords = {
+                new Coordinate(1, 1),
+                new Coordinate(1, 6),
+                new Coordinate(8, 3),
+                new Coordinate(3, 4),
+                new Coordinate(5, 5),
+                new Coordinate(8, 9)
+        };
+        DaySix daySix = new DaySix(coords);
+        daySix.calculateManhattanDistances();
+
+        assertThat(daySix.getSecondSolution(32)).isEqualTo(16);
+    }
+
+    @Test
+    public void secondSolution() {
+        DaySix daySix = new DaySix(Input6.COORDS);
+        daySix.calculateManhattanDistances();
+
+        assertThat(daySix.getSecondSolution(10000)).isEqualTo(35237);
+    }
 }

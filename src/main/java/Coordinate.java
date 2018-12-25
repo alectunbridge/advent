@@ -1,12 +1,10 @@
 class Coordinate {
-    static char lastName = 'A';
-    private final char name;
     private final int x;
     private final int y;
+    private char name;
     private int[][] manhattanDistances;
 
     Coordinate(int x, int y) {
-        this.name = lastName++;
         this.x = x;
         this.y = y;
     }
@@ -23,8 +21,16 @@ class Coordinate {
         return name;
     }
 
+    void setName(char name) {
+        this.name = name;
+    }
+
     void setManhattanDistances(int[][] manhattanDistances) {
         this.manhattanDistances = manhattanDistances;
+    }
+
+    public int[][] getManhattanDistances() {
+        return manhattanDistances;
     }
 
     int getManahttanDistance(int j, int i) {
