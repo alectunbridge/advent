@@ -5,6 +5,7 @@ import java.util.stream.IntStream;
 class DaySeven {
     private int[][] adjacencyMatrix;
     private int[][] drawnNodes;
+    private Worker[] workers;
 
     DaySeven(String... input) {
         List<Edge> edges = new ArrayList<>();
@@ -17,6 +18,7 @@ class DaySeven {
         int size = numberOfStartNodes > numberOfEndNodes ? numberOfStartNodes : numberOfEndNodes;
         adjacencyMatrix = new int[size][size];
         drawnNodes = new int[size][size];
+        workers = new Worker[]{new Worker(), new Worker(), new Worker(), new Worker(), new Worker()};
 
         edges.stream().forEach(edge -> adjacencyMatrix[edge.getStart() - 'A'][edge.getEnd() - 'A'] = 1);
 
@@ -49,10 +51,10 @@ class DaySeven {
         StringBuilder result = new StringBuilder();
         while (result.length() != adjacencyMatrix.length) {
             for (char endNode = 'A'; endNode < (adjacencyMatrix.length + 'A'); endNode++) {
-                if (result.indexOf(""+endNode)==-1 && getNoOfParents(endNode) == 0) {
+                if (result.indexOf("" + endNode) == -1 && getNoOfParents(endNode) == 0) {
                     result.append(endNode);
                     for (int i = 0; i < adjacencyMatrix.length; i++) {
-                        drawnNodes[endNode - 'A'][i] = -adjacencyMatrix[endNode-'A'][i];
+                        drawnNodes[endNode - 'A'][i] = -adjacencyMatrix[endNode - 'A'][i];
                     }
                     break;
                 }
@@ -62,6 +64,51 @@ class DaySeven {
         return result.toString();
     }
 
+    int getSecondSolution() {
+        int secondNo = 0;
+        StringBuilder assignedNodes = new StringBuilder();
+        do {
+            for (char endNode = 'A'; endNode < (adjacencyMatrix.length + 'A'); endNode++) {
+                if (assignedNodes.indexOf("" + endNode) == -1 && getNoOfParents(endNode) == 0) {
+                    if (assignNodeToWorker(endNode)) {
+                        assignedNodes.append(endNode);
+                    }
+                }
+            }
+            for (Worker worker : workers) {
+                char completedNode = worker.doWork();
+                if (!(Character.MIN_VALUE == completedNode)) {
+                    //mark node as drawn
+                    for (int i = 0; i < adjacencyMatrix.length; i++) {
+                        drawnNodes[completedNode - 'A'][i] = -adjacencyMatrix[completedNode - 'A'][i];
+                    }
+                }
+            }
+            secondNo++;
+        } while (assignedNodes.length() != adjacencyMatrix.length || workersAreBusy());
+
+        return secondNo;
+    }
+
+    private boolean workersAreBusy() {
+        for (Worker worker : workers) {
+            if (worker.isBusy()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean assignNodeToWorker(char node) {
+        for (Worker worker : workers) {
+            if (worker.assignNode(node)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     private int getNoOfParents(char node) {
         int noOfParents = 0;
         for (int startNode = 0; startNode < adjacencyMatrix.length; startNode++) {
@@ -69,4 +116,5 @@ class DaySeven {
         }
         return noOfParents;
     }
+
 }

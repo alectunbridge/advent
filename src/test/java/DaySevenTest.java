@@ -63,4 +63,14 @@ public class DaySevenTest {
 
         assertThat(daySeven.getFirstSolution()).isEqualTo("CABDFE");
     }
+
+    @Test
+    public void secondSolution() {
+        DaySeven daySeven = new DaySeven(
+            Input7.INSTRUCTIONS
+        );
+        assertThat(daySeven.getSecondSolution()).isEqualTo(1072);
+    }
+
+
 }
